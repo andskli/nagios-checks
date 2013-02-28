@@ -6,7 +6,7 @@ fi
 RC=0
 HBDEVS=`grep ^link /etc/llttab|awk '{print $3}'|sed 's/://;s_/dev/__'`
 get_link_status () {
-    echo `dladm show-dev $1 -p|awk '{print $2}'|awk -F'=' '{print $2}'`
+    echo `/usr/bin/sudo /usr/sbin/dladm show-dev $1 -p|awk '{print $2}'|awk -F'=' '{print $2}'`
 }
 
 STATUSLINE=""

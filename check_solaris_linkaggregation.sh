@@ -7,21 +7,21 @@ fi
 
 # Get list of aggregates
 get_aggrs () {
-	AGGRS=`dladm show-aggr -p|grep ^aggr|awk '{print $2}'|awk -F'=' '{print $2}'`
+	AGGRS=`/usr/bin/sudo /usr/sbin/dladm show-aggr -p|grep ^aggr|awk '{print $2}'|awk -F'=' '{print $2}'`
 	#echo $AGGRS
 }
 
 # Takes one argument: the aggregate key id (integer)
 get_aggr_devices () {
 	AGGRKEY=$1
-	DEVS=`dladm show-aggr -p $AGGRKEY|grep ^dev|awk '{print $3}'|awk -F'=' '{print $2}'`
+	DEVS=`/usr/bin/sudo /usr/sbin/dladm show-aggr -p $AGGRKEY|grep ^dev|awk '{print $3}'|awk -F'=' '{print $2}'`
 	#echo $DEVS
 }
 
 # Get status of a device from dladm, return "up" or "down"
 get_dev_linkstatus () {
 	DEV=$1
-	DEVSTATUS=`dladm show-dev -p|grep $DEV|awk '{print $2}'|awk -F'=' '{print $2}'`
+	DEVSTATUS=`/usr/bin/sudo /usr/sbin/dladm show-dev -p|grep $DEV|awk '{print $2}'|awk -F'=' '{print $2}'`
 	#echo $DEVSTATUS
 }
 

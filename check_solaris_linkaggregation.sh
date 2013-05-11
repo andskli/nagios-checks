@@ -1,35 +1,35 @@
 #!/bin/bash
 RC=0
 
+DLADMBIN=$(which dladm)
+SUDOBIN=$(which sudo)
+AWKBIN=$(which awk)
+
 if [ -f /opt/op5/plugins/utils.sh ] ; then
     . /opt/op5/plugins/utils.sh
 fi
 
 # Get list of aggregates
 get_aggrs () {
-	AGGRS=`/usr/bin/sudo /usr/sbin/dladm show-aggr -p|grep ^aggr|awk '{print $2}'|awk -F'=' '{print $2}'`
-	#echo $AGGRS
+	AGGRS=`$SUDOBIN $DLADMBIN show-aggr -p|grep ^aggr|$AWKBIN '{print $2}'|$AWKBIN -F'=' '{print $2}'`
 }
 
 # Takes one argument: the aggregate key id (integer)
 get_aggr_devices () {
 	AGGRKEY=$1
-	DEVS=`/usr/bin/sudo /usr/sbin/dladm show-aggr -p $AGGRKEY|grep ^dev|awk '{print $3}'|awk -F'=' '{print $2}'`
-	#echo $DEVS
+	DEVS=`$SUDOBIN $DLADMBIN show-aggr -p $AGGRKEY|grep ^dev|$AWKBIN '{print $3}'|$AWKBIN -F'=' '{print $2}'`
 }
 
 # Get status of a device from dladm, return "up" or "down"
 get_dev_linkstatus () {
 	DEV=$1
-	DEVSTATUS=`/usr/bin/sudo /usr/sbin/dladm show-dev -p|grep $DEV|awk '{print $2}'|awk -F'=' '{print $2}'`
-	#echo $DEVSTATUS
+	DEVSTATUS=`$SUDOBIN $DLADMBIN show-dev -p|grep $DEV|$AWKBIN '{print $2}'|$AWKBIN -F'=' '{print $2}'`
 }
 
 STATUSLINE=""
 get_aggrs
 for aggr in $AGGRS; do
 	get_aggr_devices $aggr
-#	echo $DEVS
 	for dev in $DEVS; do
 		get_dev_linkstatus $dev
         DEVSTATUS=`echo $DEVSTATUS|tr '[a-z]' '[A-Z]'`

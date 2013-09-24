@@ -1,4 +1,12 @@
 #!/bin/bash
+#
+# check_solaris_linkaggregation.sh
+#
+# Check Solaris dladm link aggregationx86
+#
+# Author: Andreas Lindh
+#
+
 RC=0
 
 DLADMBIN=$(which dladm)

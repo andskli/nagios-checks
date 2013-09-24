@@ -1,4 +1,13 @@
 #!/bin/bash
+#
+# check_vcs_hblinks.sh
+#
+# Check Veritas Cluster Server HeartBeat link status.
+# Currently only tested on Solaris 10 x86
+#
+# Author: Andreas Lindh
+#
+
 RC=0
 
 SUDOBIN=$(which sudo)
